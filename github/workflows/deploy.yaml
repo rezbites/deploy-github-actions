@@ -1,0 +1,45 @@
+# .github/workflows/deploy.yml
+name: CI/CD Pipeline
+
+# Run this workflow on pushes to the main branch
+on:
+  push:
+    branches: 
+      - master
+  workflow_dispatch: # Optional: lets you manually trigger it
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # or your preferred version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: skip tests
+        run: npm test
+
+      - name: Build project
+        run: npm run build
+
+  deploy:
+    name: Deploy (placeholder)
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Example: print a message
+      - name: Deployment step
+        run: echo "Add actual deploy commands here"
